@@ -1,16 +1,9 @@
-# portfolio
+uploading in vercel
 
-A new Flutter project.
+#Check properly these commands:
 
-## Getting Started
+<p>Build command: flutter/bin/flutter build web --release</p>
 
-This project is a starting point for a Flutter application.
+<p>Output directory: build/web</p>
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<p>Install command: if cd flutter; then git pull && cd .. ; else git clone https://github.com/flutter/flutter.git; fi && ls && flutter/bin/flutter doctor && flutter/bin/flutter clean && flutter/bin/flutter config --enable-web</p>
