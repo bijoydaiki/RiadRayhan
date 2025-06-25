@@ -26,11 +26,27 @@ class Project {
 // Sample Data - Enhanced with multiple images
 final List<Project> liveApps = [
   Project(
+    title: 'Daiki Axis ERP',
+    description: 'Daiki Axis is a global leader in Sewage Treatment Plant (STP) solutions. With advanced technology and years of experience, Daiki Axis helps clean and treat wastewater to make the environment healthier and safer.This app helps our team work better, faster, and smarter. From scheduling regular maintenance to reporting problems - everything is just a tap away.Whether you are working on a small site or a big project, this app keeps everything organized and helps you connect with your team and higher authority easily.',
+
+    technologies: ['Flutter', 'Google Map', 'Location', 'REST API','Redis','Hive'],
+    icon: Icons.domain,
+    imageUrls: [
+      'https://play-lh.googleusercontent.com/G_Sk1nX6-AL3lfLWWXWJwBe00oxJerg_ZzfCFcxeGAafplCKDsl2fIV6z_ttPd-lZw=w2560-h1440-rw',
+      'https://play-lh.googleusercontent.com/qPptjDGA3tBEsnndIW_aUx_J3qcBQxGwq0SBiEhaqNZ1xJoRMBMxIEPn9wVxABH6Ww=w2560-h1440-rw',
+      'https://play-lh.googleusercontent.com/qPptjDGA3tBEsnndIW_aUx_J3qcBQxGwq0SBiEhaqNZ1xJoRMBMxIEPn9wVxABH6Ww=w2560-h1440-rw',
+      'https://play-lh.googleusercontent.com/Vktt-bEakcC9DOl9YG2cCqxbcRTc4WeOekL4SxlLu7YS4roHV5TdXSdpzNXfqtGJFZY=w2560-h1440-rw',
+      'https://play-lh.googleusercontent.com/1kyVxh-ZlpC0-WJ1PriXsjS_e5l1pjE_luOeMRqWqT0WiLjRbZjOpR7F9-oiv7iNvvo=w2560-h1440-rw',
+    ],
+    videoUrl: 'https://youtu.be/uANj8OUAgQA',
+    isYouTubeVideo: true,
+  ),
+  Project(
     title: 'Urloker',
     description: 'This app is made for Australian people only. Your all-in-one platform for hassle-free storage, convenience, and connectivity! Designed to make your life easier, Urloker offers three innovative services\n'
         '\n1. Luggage Storage Made Easy: Travelers can securely store their luggage in convenient locations, freeing them to explore without the burden of heavy bags. With affordable rates and 24/7 access at select locations, Urloker ensures your belongings are safe while you roam worry-free'
-    '\n2. Airbnb Key Exchange Simplified: Hosts and guests can enjoy seamless key handovers with our secure key storage system. Airbnb hosts can leave keys in trusted Urloker locations for guests to pick up at their convenience, ensuring a smooth check-in experience.'
-  '\n3. Mobile Charging Stations: Stay powered up on the go! Our mobile charging stations, located at partner stores, provide fast, reliable charging for your devices while you relax or shop.',
+        '\n2. Airbnb Key Exchange Simplified: Hosts and guests can enjoy seamless key handovers with our secure key storage system. Airbnb hosts can leave keys in trusted Urloker locations for guests to pick up at their convenience, ensuring a smooth check-in experience.'
+        '\n3. Mobile Charging Stations: Stay powered up on the go! Our mobile charging stations, located at partner stores, provide fast, reliable charging for your devices while you relax or shop.',
     technologies: ['Flutter', 'Google Map', 'Stripe', 'REST API'],
     icon: Icons.shopping_cart,
     imageUrls: [
@@ -94,7 +110,7 @@ final List<Project> liveApps = [
 final List<Project> aiapps = [
   Project(
     title: 'Gemini AI Chatbot',
-    description: 'This Flutter-based app integrates Gemini AI using the Gemini API to deliver intelligent, real-time responses and powerful conversational capabilities. Built with a sleek and user-friendly interface, the app allows users to interact with Gemini AI for tasks such as answering questions, generating content, and assisting with everyday queries. Leveraging Google’s advanced AI technology, the app offers fast, context-aware replies and a smooth user experience across devices. It showcases the potential of combining Flutter’s cross-platform development with cutting-edge AI, making it ideal for productivity, learning, and experimentation with generative AI features in a mobile environment.',
+    description: 'This Flutter-based app integrates Gemini AI using the Gemini API to deliver intelligent, real-time responses and powerful conversational capabilities. Built with a sleek and user-friendly interface, the app allows users to interact with Gemini AI for tasks such as answering questions, generating content, and assisting with everyday queries. Leveraging Google\'s advanced AI technology, the app offers fast, context-aware replies and a smooth user experience across devices. It showcases the potential of combining Flutter\'s cross-platform development with cutting-edge AI, making it ideal for productivity, learning, and experimentation with generative AI features in a mobile environment.',
     technologies: ['Flutter', 'Gemini API'],
     icon: Icons.radar,
     imageUrls: [
@@ -105,6 +121,21 @@ final List<Project> aiapps = [
     videoUrl: 'https://www.youtube.com/watch?v=restaurant123',
     isYouTubeVideo: true,
   ),
+  Project(
+    title: 'AI Financial Manager(Automation)',
+    description: 'I created financial automation app using Gemini AI. in this app all task will be complete by AI. data will be get from API. after fetching data then AI started the work.also it can submit day by days report successfully',
+    technologies: ['Flutter', 'Gemini API'],
+    icon: Icons.manage_accounts,
+    imageUrls: [
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=400&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop',
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&h=300&fit=crop',
+    ],
+    videoUrl: 'https://www.youtube.com/watch?v=fitness123',
+    isYouTubeVideo: true,
+  ),
+
   Project(
     title: 'Fitness Tracker',
     description: 'Comprehensive health and fitness tracking app with workout plans, nutrition tracking, and social features.',
@@ -119,17 +150,7 @@ final List<Project> aiapps = [
     videoUrl: 'https://www.youtube.com/watch?v=fitness123',
     isYouTubeVideo: true,
   ),
-  Project(
-    title: 'Real Estate App',
-    description: 'Property listing and management app with virtual tours, mortgage calculator, and agent communication.',
-    technologies: ['Flutter', 'Firebase', 'Maps', 'AR Core'],
-    icon: Icons.home,
-    imageUrls: [
-      'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1494526585095-c41746248156?w=400&h=300&fit=crop',
-    ],
-  ),
+
 ];
 
 final List<Project> mlApps = [
@@ -161,8 +182,8 @@ final List<Project> mlApps = [
     isYouTubeVideo: true,
   ),
   Project(
-    title: 'Gesture Recognition',
-    description: 'Advanced hand gesture recognition app using computer vision for accessibility and gaming applications.',
+    title: 'Air Gesture Recognition',
+    description: 'Using this app user can art easily without touching display or screen.',
     technologies: ['Flutter', 'OpenCV', 'MediaPipe', 'TensorFlow'],
     icon: Icons.back_hand,
     imageUrls: [
@@ -178,7 +199,7 @@ final List<Project> mlApps = [
   Project(
     title: 'OCR Text Scanner',
     description: 'Optical Character Recognition app with multi-language support, document scanning, and text translation.',
-    technologies: ['Flutter', 'ML Kit', 'Firebase', 'Translate API'],
+    technologies: ['Flutter', 'ML Kit', 'Firebase'],
     icon: Icons.document_scanner,
     imageUrls: [
       'https://images.unsplash.com/photo-1586281380117-5a60ae2050cc?w=400&h=300&fit=crop',
@@ -202,41 +223,18 @@ final List<Project> sensorApps = [
     videoUrl: 'https://www.youtube.com/watch?v=motion123',
     isYouTubeVideo: true,
   ),
-  Project(
-    title: 'Environmental Monitor',
-    description: 'IoT app monitoring temperature, humidity, air quality with data visualization and historical tracking.',
-    technologies: ['Flutter', 'Arduino', 'Bluetooth', 'Charts'],
-    icon: Icons.thermostat,
-    imageUrls: [
-      'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1611273426858-450d8e3c9fce?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1569163139394-de4e5f43e4e3?w=400&h=300&fit=crop',
-    ],
-    videoUrl: 'https://www.youtube.com/watch?v=iot123',
-    isYouTubeVideo: true,
-  ),
+
   Project(
     title: 'Step Counter',
     description: 'Advanced fitness app using accelerometer and gyroscope sensors with goal setting and achievement tracking.',
-    technologies: ['Flutter', 'Pedometer', 'HealthKit', 'Analytics'],
+    technologies: ['Java', 'sensor'],
     icon: Icons.directions_walk,
     imageUrls: [
       'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop',
       'https://images.unsplash.com/photo-1549476464-37392f717541?w=400&h=300&fit=crop',
     ],
   ),
-  Project(
-    title: 'Compass & GPS',
-    description: 'Navigation app with compass, GPS tracking, offline maps, and location sharing features.',
-    technologies: ['Flutter', 'GPS', 'Maps', 'Compass'],
-    icon: Icons.explore,
-    imageUrls: [
-      'https://images.unsplash.com/photo-1564094864575-b1b3aa6c1b81?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=400&h=300&fit=crop',
-      'https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?w=400&h=300&fit=crop',
-    ],
-  ),
+
 ];
 
 final List<Project> ecommerce = [
@@ -260,7 +258,7 @@ final List<Project> Others = [
 
   Project(
     title: 'Telegram Mini Bot App',
-    description: 'This Flutter-based Telegram Mini App is inspired by Hamster Kombat and offers an engaging coin-earning experience directly within Telegram. Users can earn coins through tap-to-earn mechanics, watching YouTube videos, claiming daily bonuses, and referring friends. The app also includes sharing features to boost engagement and reach. Built using Flutter Web, it ensures smooth performance and seamless integration with Telegram’s interface. With real-time updates, gamified interactions, and user authentication via Telegram, the app delivers a fun and rewarding experience. Ideal for users looking to earn while engaging in simple tasks, it showcases the power of Flutter in Telegram Mini App development.',
+    description: 'This Flutter-based Telegram Mini App is inspired by Hamster Kombat and offers an engaging coin-earning experience directly within Telegram. Users can earn coins through tap-to-earn mechanics, watching YouTube videos, claiming daily bonuses, and referring friends. The app also includes sharing features to boost engagement and reach. Built using Flutter Web, it ensures smooth performance and seamless integration with Telegram\'s interface. With real-time updates, gamified interactions, and user authentication via Telegram, the app delivers a fun and rewarding experience. Ideal for users looking to earn while engaging in simple tasks, it showcases the power of Flutter in Telegram Mini App development.',
     technologies: ['Flutter', 'Nodejs', 'MongoDB', 'Render'],
     icon: Icons.telegram,
     imageUrls: [

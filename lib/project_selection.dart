@@ -4,9 +4,8 @@ import 'package:chewie/chewie.dart';
 import 'project_model.dart';
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'dart:html' as html;
-import 'package:flutter/foundation.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart'; // Add this import
 
 class ProjectsSection extends StatefulWidget {
   @override
@@ -261,7 +260,6 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   String? _getYouTubeVideoId(String url) {
-    // Handle different YouTube URL formats
     final regExp = RegExp(
       r'(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/shorts\/)([^"&?\/\s]{11})',
       caseSensitive: false,
@@ -277,9 +275,7 @@ class _ProjectCardState extends State<ProjectCard> {
 
     // Check if it's a YouTube URL
     if (videoUrl.contains('youtube.com') || videoUrl.contains('youtu.be')) {
-      // For YouTube videos, we can't get direct URLs due to API restrictions
-      // Return null to use iframe embed instead
-      return null;
+      return null; // Will use iframe embed
     }
 
     // Handle Google Drive URLs
@@ -287,7 +283,6 @@ class _ProjectCardState extends State<ProjectCard> {
       return _convertGoogleDriveUrl(videoUrl);
     }
 
-    // Return direct video URLs as-is
     return videoUrl;
   }
 
@@ -355,12 +350,34 @@ class _ProjectCardState extends State<ProjectCard> {
     }
   }
 
-  void _openVideoInNewTab() {
+  Future<void> _launchVideoUrl() async {
     if (widget.project.videoUrl != null) {
-      if (kIsWeb) {
-        html.window.open(widget.project.videoUrl!, '_blank');
+      final Uri url = Uri.parse(widget.project.videoUrl!);
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      } else {
+        print('Could not launch ${widget.project.videoUrl}');
       }
     }
+  }
+
+  void _showVideoPlayer() {
+    setState(() {
+      _showVideo = true;
+      _autoSlideTimer?.cancel();
+      if (!_videoInitialized && !_videoLoadError) {
+        _initializeVideoPlayer();
+      }
+    });
+  }
+
+  void _hideVideoPlayer() {
+    setState(() {
+      _showVideo = false;
+      if (widget.project.imageUrls != null && widget.project.imageUrls!.length > 1) {
+        _startAutoSlide();
+      }
+    });
   }
 
   @override
@@ -470,12 +487,10 @@ class _ProjectCardState extends State<ProjectCard> {
   }
 
   Widget _buildMediaContent() {
-    // Priority: Show video if requested and can be embedded, then images, then icon
     if (_showVideo && widget.project.videoUrl != null) {
       return _buildVideoContent();
     }
 
-    // Multiple images
     if (widget.project.imageUrls != null &&
         widget.project.imageUrls!.isNotEmpty &&
         widget.project.imageUrls!.length > 1 &&
@@ -483,7 +498,6 @@ class _ProjectCardState extends State<ProjectCard> {
       return _buildImageCarousel();
     }
 
-    // Single image
     String? singleImageUrl;
     if (widget.project.imageUrl != null && widget.project.imageUrl!.isNotEmpty) {
       singleImageUrl = widget.project.imageUrl;
@@ -562,7 +576,6 @@ class _ProjectCardState extends State<ProjectCard> {
           },
         ),
 
-        // Page indicators
         if (imageUrls.length > 1)
           Positioned(
             bottom: 10,
@@ -588,7 +601,6 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ),
 
-        // Video button
         if (widget.project.videoUrl != null)
           Positioned(
             top: 10,
@@ -605,22 +617,10 @@ class _ProjectCardState extends State<ProjectCard> {
                   size: 28,
                 ),
                 onPressed: () {
-                  // Check if it's YouTube video
-                  if (widget.project.videoUrl!.contains('youtube.com') ||
-                      widget.project.videoUrl!.contains('youtu.be')) {
-                    _openVideoInNewTab();
+                  if (_showVideo) {
+                    _hideVideoPlayer();
                   } else {
-                    setState(() {
-                      _showVideo = !_showVideo;
-                      if (_showVideo) {
-                        _autoSlideTimer?.cancel();
-                        if (!_videoInitialized && !_videoLoadError) {
-                          _initializeVideoPlayer();
-                        }
-                      } else if (widget.project.imageUrls!.length > 1) {
-                        _startAutoSlide();
-                      }
-                    });
+                    _showVideoPlayer();
                   }
                 },
               ),
@@ -671,7 +671,6 @@ class _ProjectCardState extends State<ProjectCard> {
           },
         ),
 
-        // Video button
         if (widget.project.videoUrl != null)
           Positioned(
             top: 10,
@@ -688,17 +687,10 @@ class _ProjectCardState extends State<ProjectCard> {
                   size: 28,
                 ),
                 onPressed: () {
-                  // Check if it's YouTube video
-                  if (widget.project.videoUrl!.contains('youtube.com') ||
-                      widget.project.videoUrl!.contains('youtu.be')) {
-                    _openVideoInNewTab();
+                  if (_showVideo) {
+                    _hideVideoPlayer();
                   } else {
-                    setState(() {
-                      _showVideo = !_showVideo;
-                      if (_showVideo && !_videoInitialized && !_videoLoadError) {
-                        _initializeVideoPlayer();
-                      }
-                    });
+                    _showVideoPlayer();
                   }
                 },
               ),
@@ -736,15 +728,7 @@ class _ProjectCardState extends State<ProjectCard> {
               ),
               child: IconButton(
                 icon: Icon(Icons.image, color: Colors.white, size: 28),
-                onPressed: () {
-                  setState(() {
-                    _showVideo = false;
-                    if (widget.project.imageUrls != null &&
-                        widget.project.imageUrls!.length > 1) {
-                      _startAutoSlide();
-                    }
-                  });
-                },
+                onPressed: _hideVideoPlayer,
               ),
             ),
           ),
@@ -768,7 +752,7 @@ class _ProjectCardState extends State<ProjectCard> {
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
-                    onPressed: _openVideoInNewTab,
+                    onPressed: _launchVideoUrl,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFF00FFFF),
                       foregroundColor: Color(0xFF0A0E27),
@@ -813,13 +797,11 @@ class _ProjectCardState extends State<ProjectCard> {
     final videoId = _getYouTubeVideoId(widget.project.videoUrl!);
 
     if (videoId != null && kIsWeb) {
-      // Create a WebViewController instance
       final controller = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..setNavigationDelegate(
           NavigationDelegate(
             onNavigationRequest: (NavigationRequest request) {
-              // Allow YouTube embed URL to load
               if (request.url.contains('youtube.com')) {
                 return NavigationDecision.navigate;
               }
@@ -848,15 +830,7 @@ class _ProjectCardState extends State<ProjectCard> {
               ),
               child: IconButton(
                 icon: Icon(Icons.image, color: Colors.white, size: 28),
-                onPressed: () {
-                  setState(() {
-                    _showVideo = false;
-                    if (widget.project.imageUrls != null &&
-                        widget.project.imageUrls!.length > 1) {
-                      _startAutoSlide();
-                    }
-                  });
-                },
+                onPressed: _hideVideoPlayer,
               ),
             ),
           ),
@@ -865,33 +839,51 @@ class _ProjectCardState extends State<ProjectCard> {
     } else {
       return Container(
         color: Color(0xFF1A237E),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.video_library, color: Color(0xFF00FFFF), size: 60),
-              SizedBox(height: 15),
-              Text(
-                'YouTube Video',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.video_library, color: Color(0xFF00FFFF), size: 60),
+                  SizedBox(height: 15),
+                  Text(
+                    'YouTube Video',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton.icon(
+                    onPressed: _launchVideoUrl,
+                    icon: Icon(Icons.open_in_new, size: 18),
+                    label: Text('Watch on YouTube'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF00FFFF),
+                      foregroundColor: Color(0xFF0A0E27),
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.image, color: Colors.white, size: 28),
+                  onPressed: _hideVideoPlayer,
                 ),
               ),
-              SizedBox(height: 10),
-              ElevatedButton.icon(
-                onPressed: _openVideoInNewTab,
-                icon: Icon(Icons.open_in_new, size: 18),
-                label: Text('Watch on YouTube'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF00FFFF),
-                  foregroundColor: Color(0xFF0A0E27),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
     }
@@ -924,7 +916,7 @@ class _ProjectCardState extends State<ProjectCard> {
             if (widget.project.videoUrl != null) ...[
               SizedBox(height: 15),
               ElevatedButton.icon(
-                onPressed: _openVideoInNewTab,
+                onPressed: _showVideoPlayer,
                 icon: Icon(Icons.play_arrow, size: 18),
                 label: Text('Watch Video'),
                 style: ElevatedButton.styleFrom(
