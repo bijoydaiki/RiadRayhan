@@ -38,7 +38,7 @@ class HeaderSection extends StatelessWidget {
                   ),
                   child: ClipOval(
                     child: Image.asset(
-                      'profile_photo.jpeg', // Add your photo here
+                      'assets/profile_photo.jpeg', // Add your photo here
                       fit: BoxFit.fill,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
